@@ -73,7 +73,7 @@ I'll expand this write-up to provide a crash course on format string bugs.
 ## Format String Bugs
 
 `printf()` is a C function that outputs formatted data to `stdout`.  
-The first argument to `printf` is called the `format string`. It may contain ordinary characters (which are copied to the `stdout` unchanged) as well as `format specifiers` (which get replaced by subsequent arguments passed to `printf`, e.g. `%s`).
+The first argument to `printf` is called the `format string`. It may contain ordinary characters (which are copied to the `stdout` unchanged) as well as `format specifiers` (which get replaced by subsequent arguments passed to `printf`), e.g. `%s`.
 
 Example:
 
