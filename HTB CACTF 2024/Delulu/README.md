@@ -73,7 +73,7 @@ I'll expand this write-up to provide a crash course on format string bugs.
 ## Format String Bugs
 
 `printf()` is a C function that outputs formatted data to `stdout`.  
-The first argument to `printf` is called the `format string`. It may contain ordinary characters (which are copied to the `stdout` unchanged) as well as `format specifiers` (which get replaced by subsequent arguments passed to `printf`).
+The first argument to `printf` is called the `format string`. It may contain ordinary characters (which are copied to the `stdout` unchanged) as well as `format specifiers` (which get replaced by subsequent arguments passed to `printf`, e.g. `%s`).
 
 Example:
 
@@ -101,16 +101,19 @@ Alice scored 94 marks on the Physics test
 **Note:** I'm using a `gcc` docker container for pinning the version of `gcc` and `libc`
 
 While parsing the `format string`, if `printf()` encounters a `format specifier`, it expects a subsequent argument of the corresponding type passed to the function.  
-Now think of the scenario when a `format specifier` is present, but no other arguments are passed to the function:
+Now consider the scenario where a `format specifier` is present, but corresponding arguments are not passed to the function:
 
 ```c
   printf("%x");
 ```
 
-It leads to format string bugs. In this example, the value stored in the `rsi` register would be retrieved by `printf()`.  
-The System V ABI Calling Convention (used by 64-bit linux) specifies that registers `rdi`, `rsi`, `rdx`, `rcx`, `r8` and `r9` store initial 6 arguments passed to any function. If more than 6 arguments are passed, the remaining arguments are stored on the stack.  
-Therefore, even when `rsi` was not set in `printf()`'s stack frame, it still got utilised.  
-(Why `rsi` and not `rdi`? Because `rdi` would store the pointer to `format string`)
+It'd retrieve unintended data, leading to format string bugs. In this example, the value stored in the `rsi` register would be retrieved by `printf()`.
+
+The System V ABI Calling Convention (used by 64-bit linux) dictates that registers `rdi`, `rsi`, `rdx`, `rcx`, `r8` and `r9` store initial 6 arguments passed to any function. If more than 6 arguments are passed, the remaining arguments are stored on the stack.  
+As `printf()` encounters `%x`, it retrieves the value from `rsi` register and displays it.  
+Even when `rsi` was not set in the current stack frame, it might still have uninitialized data or values set by preceding functions.  
+
+`rsi` stores the second argument.  Why was it used instead of `rdi`, which stores the first argument? Because `rdi` would always store the pointer to `format string`)
 
 Consider another example:
 
@@ -118,10 +121,9 @@ Consider another example:
   printf("%p %p %p %p %p %p %p %p %p %p");
 ```
 
-In this example, values from the `rsi`, `rdx`, `rcx`, `r8`, and `r9` registers, as well as 5 values from the stack would get printed.  
-Therefore, format string bugs can cause leaks.
+In this example, values from the `rsi`, `rdx`, `rcx`, `r8`, and `r9` registers, as well as 5 values from top of the stack would get printed.
 
-To clarify it better, I'd use an example:
+Consider another example:
 
 ```c
 #include <stdio.h>
