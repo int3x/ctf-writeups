@@ -197,7 +197,7 @@ This feature allows more comprehensive and efficient leaks.
 ### Arbitrary read with `%s`
 
 The `%s` format specifier brings even more value to the table.  
-When `printf` encounters the `%s` format specifier, it expects an argument which is a string pointer. If no argument is specified, it attempts to defererence and print the value from `rsi`.  
+When `printf` encounters the `%s` format specifier, it expects an argument which is a string pointer. If no argument is specified, it attempts to dereference and print the value from `rsi`.  
 Using `%offset$n`, we can try to dereference any value from those 5 registers and the stack.
 
 CTF pwnables with format string bugs often use a function to receive user input and pass it to `printf()`.  
@@ -715,3 +715,4 @@ The same payload leads to the true flag on remote:
 ```text
 HTB{m45t3r_0f_d3c3pt10n}
 ```
+
