@@ -1,5 +1,13 @@
 # Delulu
 
+## Table of contents
+
+- [IDA Pseudocode](#ida-pseudocode)
+- [Format String Bugs](#format-string-bugs)
+  - [Arbitrary read with %s](#arbitrary-read-with-s)
+  - [Arbitrary write with %n](#arbitrary-write-with-n)
+- [Solving the challenge](#solving-the-challenge)
+
 ```console
 inte@debian-pc:~$ file delulu
 delulu: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter ./glibc/ld-linux-x86-64.so.2, BuildID[sha1]=edae8c8bd5153e13fa60aa00f53071bb7b9a122f, for GNU/Linux 3.2.0, not stripped
@@ -194,7 +202,7 @@ Between 1337 and 420, 1337 is greater
 
 This feature allows more comprehensive and efficient leaks.
 
-### Arbitrary read with `%s`
+### Arbitrary read with %s
 
 The `%s` format specifier brings even more value to the table.  
 When `printf` encounters the `%s` format specifier, it expects an argument which is a string pointer. If no argument is specified, it attempts to dereference and print the value from `rsi`.  
@@ -278,7 +286,7 @@ CTF{secret_flag}||||@@@[*] Got EOF while reading in interactive
 
 When debugging issues, it is helpful to replace `%s` in the payload with `%p`
 
-### Arbitrary write with `%n`
+### Arbitrary write with %n
 
 Next up, we have `%n` format specifier, the capo di tutti capi.  
 When `printf` encounters `%n`, it expects an integer argument and stores the number of characters written so far into this argument.  
