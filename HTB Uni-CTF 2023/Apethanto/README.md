@@ -1,5 +1,13 @@
 # Apethanto
 
+## Table of contents
+
+- [Port scan](#port-scan)
+- [CVE-2023-38646 in Metabase](#cve-2023-38646-in-metabase)
+- [Privilege escalation with sudo token](#privilege-escalation-with-sudo-token)
+
+## Port scan
+
 ```console
 inte@debian-pc:~$ sudo nmap -p- --min-rate 4000 10.129.248.227
 Nmap scan report for 10.129.248.227
@@ -43,6 +51,8 @@ The URL <http://metabase.apethanto.htb/> can be found on homepage; the previous 
 ```text
 10.129.248.88 apethanto.htb metabase.apethanto.htb
 ```
+
+## CVE-2023-38646 in Metabase
 
 <http://metabase.apethanto.htb/> is running an instance of Metabase, same as <http://apethanto.htb:3000>  
 Recent Metabase CVE vulnerability with pre-auth RCE: <https://blog.assetnote.io/2023/07/22/pre-auth-rce-metabase/>  
@@ -99,6 +109,8 @@ metabase@Apethanto:~$ stty rows 24 cols 80
 metabase@Apethanto:~$ export TERM=xterm-256color
 metabase@Apethanto:~$ exec /bin/bash
 ```
+
+## Privilege escalation with sudo token
 
 ```console
 metabase@Apethanto:~$ id
