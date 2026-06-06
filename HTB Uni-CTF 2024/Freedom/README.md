@@ -1,5 +1,14 @@
 # Freedom
 
+## Table of contents
+
+- [Port scan](#port-scan)
+- [SQL injection in Masa CMS](#sql-injection-in-masa-cms)
+- [AS-REP Kerberoasting](#as-rep-kerberoasting)
+- [Privilege escalation with leaked handles](#privilege-escalation-with-leaked-handles)
+
+## Port scan
+
 ```console
 inte@debian-pc:~$ sudo nmap -v -p- --min-rate 4000 10.129.243.208
 
@@ -88,6 +97,8 @@ dnsHostName: DC1.freedom.htb
 10.129.243.208 DC1.freedom.htb freedom.htb DC1
 ```
 
+## SQL injection in Masa CMS
+
 <http://freedom.htb> is running Masa CMS v7.4.5:
 
 ```console
@@ -163,7 +174,10 @@ inte@debian-pc:~$ ghauri -u 'http://freedom.htb/index.cfm/_api/json/v1/default/?
 +-----------+-------+--------------------+--------------------------------------------------------------+
 ```
 
-The hashes were too slow to crack. I moved on to the Active Directory with usernames.  
+The hashes were too slow to crack. I moved on to the Active Directory with usernames.
+
+## AS-REP Kerberoasting
+
 [username-anarchy](https://github.com/urbanadventurer/username-anarchy) generates potential username formats from a list of names:
 
 ```console
@@ -253,6 +267,8 @@ User flag can be obtained:
 PS C:\Users\j.bret\Desktop> cat .\user.txt
 HTB{c4n_y0u_pl34as3_cr4ck?} 
 ```
+
+## Privilege escalation with leaked handles
 
 [PrivescCheck](https://github.com/itm4n/PrivescCheck) is a tool for scanning potential privilege escalation paths:
 
