@@ -11,3 +11,4 @@ My solutions for some CTF challenges
 | Mar 2024 | HTB CACTF 2024 | [Delulu](<HTB CACTF 2024/Delulu/README.md>) | Binary exploitation | `Format String Bug` | Dynamic address for overwrite target |
 | Dec 2024 | HTB Uni-CTF 2024 | [Freedom](<HTB Uni-CTF 2024/Freedom/README.md>) | FullPwn/Boot2root | `Masa CMS CVE-2024-32640` `AS-REP Kerberoast` `leaked handles` | Uncracked `krb5asrep` hash |
 | Mar 2025 | HTB CACTF 2025 | [Laconic](<HTB CACTF 2025/Laconic/README.md>) | Binary Exploitation | SROP | - |
+| May 2026 | HTB Business CTF 2026 | [Ghostlink](<HTB Business CTF 2026/Ghostlink/README.md>) | FullPwn/Boot2root | `HTTP Relay with ghostsurf` `ESC11` | `Hardened Server 2025` |
